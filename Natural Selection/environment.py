@@ -13,7 +13,7 @@ class environment:
         assert fav_color in colors, "this is not a valid argument (color)"
 
         self.preys = [a.prey(preys_specie,fav_color,0, random.randint(3,8))]
-        self.predators = [a.predator(predators_specie,0, random.randint(3,8))]
+        self.predators = [a.predator(predators_specie,0, random.randint(4,8))]
         self.fav_color = fav_color
 
         for prey_index in range(preys_number):
@@ -71,7 +71,7 @@ class environment:
                 if p in dead_preys:
                     raise IndexError
 
-                if self.preys[p].color == self.fav_color and roll_dice(20) > 16:
+                if self.preys[p].color == self.fav_color and roll_dice(20) > 15:
 
                     i.hungry = 0
                     dead_preys.append(p)
@@ -124,6 +124,15 @@ class environment:
         for dead in dead_preds[::-1]:
 
             del self.predators[dead]
+
+        if len(self.preys) > 15000:
+            print("\n Overpopulation of preys \n")
+            del self.preys [:round(len(self.preys)/2)]        
+
+        if len(self.predators) > 12000:
+            print("\n Overpopulation of predators \n")
+            del self.predators [:round(len(self.preys)/3)]  
+
 
     def count_animals(self):
         c_a = {"Preys" : len(self.preys), "Predators" : len(self.predators)}
